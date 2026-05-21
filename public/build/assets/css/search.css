@@ -1,0 +1,23 @@
+.section { padding: 15px; }
+
+.property-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 12px;
+}
+
+.property-img {
+    height: 140px;
+    background-size: cover;
+    background-position: center;
+}
+
+.property-body { padding: 10px; }
+
+.price { font-weight: bold; color: #2c7be5; }
+
+.filter-box input, .filter-box select {
+    margin-bottom: 8px;
+    border-radius: 10px;
+}

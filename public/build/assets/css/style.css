@@ -1,0 +1,110 @@
+:root {
+    --primary: #472183;
+    --secondary: #4B56D2;
+    --tertiary: #82C3EC;
+    --quaternary: #F1F6F5;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --backround: #f5f6f8;
+    --background-layer: #fff;
+}
+
+.section { padding: 15px; }
+
+body {
+    background: var(--backround);
+}
+
+.app-container {
+    max-width: 480px;
+    margin: auto;
+    background: var(--background-layer);
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+.btn-primary {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--tertiary);
+}
+
+/* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed;
+
+            bottom: 0;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 100%;
+            max-width: 480px;
+
+            background: #fff;
+
+            border-top: 1px solid #eee;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            padding: 10px 0;
+
+            z-index: 999;
+        }
+
+        .bottom-nav::before {
+            content: "";
+
+            position: absolute;
+
+            top: -20px;
+            left: 0;
+
+            width: 100%;
+            height: 20px;
+
+            background: linear-gradient(
+                to top,
+                rgba(255,255,255,1),
+                rgba(255,255,255,0)
+            );
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            color: #888;
+
+            font-size: 11px;
+
+            gap: 3px;
+        }
+
+        .nav-item i {
+            font-size: 19px;
+        }
+
+        .nav-item.active {
+            color: #2c7be5;
+            font-weight: 600;
+        }
