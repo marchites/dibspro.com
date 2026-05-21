@@ -53,106 +53,30 @@
         </form>
 
     </div>
+</div>
 
-    {{-- FEATURED --}}
-    <div class="section">
+{{-- FEATURED --}}
+<div class="section">
 
-        <div class="d-flex justify-content-between mb-2">
+    <div class="d-flex justify-content-between mb-2">
 
-            <strong>Properti Unggulan</strong>
+        <strong>Properti Unggulan</strong>
 
-            <a href="/property"
-                class="text-primary"
-                style="font-size:12px;">
-                Lihat semua
-            </a>
-
-        </div>
-
-        <div class="swiper property-swiper">
-
-            <div class="swiper-wrapper">
-
-                @foreach($properties as $property)
-
-                <div class="swiper-slide">
-
-                    <div class="{{ $property->status == 'sold' ? 'property-sold' : '' }}">
-
-                        @if($property->status != 'sold')
-                        <a href="/property/{{ $property->slug }}"
-                            style="text-decoration:none; color:inherit;">
-                            @endif
-
-                            <div class="property-card {{ $property->status == 'sold' ? 'property-disabled' : '' }}">
-
-                                <div class="property-img"
-                                    style="background-image:url('{{ asset('storage/' . $property->images->first()->image_path) ?? 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}')">
-
-                                    @if($property->status == 'sold')
-
-                                    <div class="sold-overlay">
-                                        SOLD OUT
-                                    </div>
-
-                                    @endif
-
-                                </div>
-
-                                <div class="property-body">
-
-                                    <div class="price">
-                                        Rp {{ number_format($property->price, 0, ',', '.') }}
-                                    </div>
-
-                                    <div class="title">
-                                        {{ Str::limit($property->title, 40) }}
-                                    </div>
-
-                                    <div class="location">
-                                        {{ $property->location }}
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            @if($property->status != 'sold')
-                        </a>
-                        @endif
-
-                    </div>
-
-                </div>
-
-                @endforeach
-
-            </div>
-
-        </div>
+        <a href="/property"
+            class="text-primary"
+            style="font-size:12px;">
+            Lihat semua
+        </a>
 
     </div>
 
-    {{-- PROPERTI TERBARU --}}
-    <div class="section">
+    <div class="swiper property-swiper">
 
-        <div class="d-flex justify-content-between mb-2">
-
-            <strong>Properti Terbaru</strong>
-
-            <a href="/property"
-                class="text-primary"
-                style="font-size:12px;">
-                Lihat semua
-            </a>
-
-        </div>
-
-        <div class="row g-2">
+        <div class="swiper-wrapper">
 
             @foreach($properties as $property)
 
-            <div class="col-6">
+            <div class="swiper-slide">
 
                 <div class="{{ $property->status == 'sold' ? 'property-sold' : '' }}">
 
@@ -208,60 +132,136 @@
 
     </div>
 
-    {{-- ARTIKEL --}}
-    <div class="section">
+</div>
 
-        <div class="d-flex justify-content-between mb-2">
+{{-- PROPERTI TERBARU --}}
+<div class="section">
 
-            <strong>Artikel Terbaru</strong>
+    <div class="d-flex justify-content-between mb-2">
 
-            <a href="/article"
-                class="text-primary"
-                style="font-size:12px;">
-                Lihat semua
-            </a>
+        <strong>Properti Terbaru</strong>
+
+        <a href="/property"
+            class="text-primary"
+            style="font-size:12px;">
+            Lihat semua
+        </a>
+
+    </div>
+
+    <div class="row g-2">
+
+        @foreach($properties as $property)
+
+        <div class="col-6">
+
+            <div class="{{ $property->status == 'sold' ? 'property-sold' : '' }}">
+
+                @if($property->status != 'sold')
+                <a href="/property/{{ $property->slug }}"
+                    style="text-decoration:none; color:inherit;">
+                    @endif
+
+                    <div class="property-card {{ $property->status == 'sold' ? 'property-disabled' : '' }}">
+
+                        <div class="property-img"
+                            style="background-image:url('{{ asset('storage/' . $property->images->first()->image_path) ?? 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}')">
+
+                            @if($property->status == 'sold')
+
+                            <div class="sold-overlay">
+                                SOLD OUT
+                            </div>
+
+                            @endif
+
+                        </div>
+
+                        <div class="property-body">
+
+                            <div class="price">
+                                Rp {{ number_format($property->price, 0, ',', '.') }}
+                            </div>
+
+                            <div class="title">
+                                {{ Str::limit($property->title, 40) }}
+                            </div>
+
+                            <div class="location">
+                                {{ $property->location }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @if($property->status != 'sold')
+                </a>
+                @endif
+
+            </div>
 
         </div>
 
-        @foreach($articles as $article)
+        @endforeach
 
-        <a href="/article/{{ $article->slug }}"
-            style="text-decoration:none; color:inherit;">
+    </div>
 
-            <div class="d-flex mb-2">
+</div>
 
-                <img src="{{ asset('storage/' . $article->thumbnail) }}"
-                    style="width:80px;
+{{-- ARTIKEL --}}
+<div class="section">
+
+    <div class="d-flex justify-content-between mb-2">
+
+        <strong>Artikel Terbaru</strong>
+
+        <a href="/article"
+            class="text-primary"
+            style="font-size:12px;">
+            Lihat semua
+        </a>
+
+    </div>
+
+    @foreach($articles as $article)
+
+    <a href="/article/{{ $article->slug }}"
+        style="text-decoration:none; color:inherit;">
+
+        <div class="d-flex mb-2">
+
+            <img src="{{ asset('storage/' . $article->thumbnail) }}"
+                style="width:80px;
                         height:80px;
                         object-fit:cover;
                         border-radius:8px;">
 
 
 
-                <div class="ms-2">
+            <div class="ms-2">
 
-                    <div style="font-size:13px; font-weight:600;">
-                        {{ $article->title }}
-                    </div>
+                <div style="font-size:13px; font-weight:600;">
+                    {{ $article->title }}
+                </div>
 
-                    <div class="mb-1">
-                        <span class="badge bg-primary">
-                            {{ $article->category->name ?? 'Artikel' }}
-                        </span>
-                    </div>
+                <div class="mb-1">
+                    <span class="badge bg-primary">
+                        {{ $article->category->name ?? 'Artikel' }}
+                    </span>
+                </div>
 
-                    <div style="font-size:11px; color:#777;">
-                        {{ $article->created_at->format('d M Y') }}
-                    </div>
-
+                <div style="font-size:11px; color:#777;">
+                    {{ $article->created_at->format('d M Y') }}
                 </div>
 
             </div>
 
-        </a>
+        </div>
 
-        @endforeach
+    </a>
 
-    </div>
+    @endforeach
+
 </div>
 @endsection
