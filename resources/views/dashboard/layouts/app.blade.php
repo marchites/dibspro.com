@@ -287,6 +287,11 @@
         <div class="topbar d-flex justify-content-between align-items-center">
 
             <div>
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
 
                 <div class="topbar-title">
                     @yield('title')
@@ -295,7 +300,6 @@
                 <div class="topbar-subtitle">
                     Admin Dashboard
                 </div>
-
             </div>
 
             <div>
@@ -352,7 +356,7 @@
     </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-@stack('scripts')   
+    @stack('scripts')
 </body>
 
 </html>

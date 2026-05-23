@@ -6,6 +6,16 @@
 
 <div class="section">
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <form action="/dashboard/properties/store"
         method="POST"
         enctype="multipart/form-data">
@@ -16,13 +26,20 @@
             <label>Judul Properti</label>
             <input type="text"
                 name="title"
-                class="form-control">
+                value="{{ old('title') }}"
+                class="form-control @error('title') is-invalid @enderror">
+            @error('title')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
 
         <div class="mb-3">
             <label>Harga</label>
             <input type="number"
                 name="price"
+                value="{{ old('price') }}"
                 class="form-control">
         </div>
 
@@ -30,6 +47,7 @@
             <label>Lokasi</label>
             <input type="text"
                 name="location"
+                value="{{ old('location') }}"
                 class="form-control">
         </div>
 
@@ -93,8 +111,14 @@
                     <input type="text"
                         name="latitude"
                         id="latitude"
-                        class="form-control"
+                        value="{{ old('latitude') }}"
+                        class="form-control @error('latitude') is-invalid @enderror"
                         readonly>
+                    @error('latitude')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
             </div>
 
@@ -104,8 +128,14 @@
                     <input type="text"
                         name="longitude"
                         id="longitude"
-                        class="form-control"
+                        value="{{ old('longitude') }}"
+                        class="form-control @error('longitude') is-invalid @enderror"
                         readonly>
+                    @error('longitude')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror                
                 </div>
             </div>
         </div>
