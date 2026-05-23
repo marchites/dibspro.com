@@ -39,11 +39,8 @@ class DashboardController extends Controller
     public function storeProperty(Request $request)
     {
         $request->validate([
-
             'title' => 'required',
-
-            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
-
+            'images.*' => 'image|mimes:jpg,jpeg,png,heic|max:2048',
         ]);
 
         /*
