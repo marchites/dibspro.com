@@ -51,7 +51,7 @@ class DashboardController extends Controller
 
         $property = Property::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title . '-' . time()),
+            'slug' => Str::slug($request->title . ' ' . $request->location),
             'price' => $request->price,
             'location' => $request->location,
             'description' => $request->description,
