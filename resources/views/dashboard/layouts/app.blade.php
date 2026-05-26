@@ -287,12 +287,6 @@
         <div class="topbar d-flex justify-content-between align-items-center">
 
             <div>
-                @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-                @endif
-
                 <div class="topbar-title">
                     @yield('title')
                 </div>
@@ -307,6 +301,14 @@
                     style="font-size:20px;"></i>
             </div>
 
+        </div>
+
+        <div class="section pb-0">
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
         </div>
 
         {{-- CONTENT --}}

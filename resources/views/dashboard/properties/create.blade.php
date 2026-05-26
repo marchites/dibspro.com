@@ -95,6 +95,19 @@
         </div>
 
         <div class="mb-3">
+            <label>Cari Alamat</label>
+            <input type="text"
+                id="address-search"
+                class="form-control"
+                placeholder="Contoh: Asia Afrika Bandung">
+        </div>
+
+        {{-- SUGGESTION --}}
+        <div id="suggestions"
+            class="list-group mb-3">
+        </div>
+
+        <div class="mb-3">
             <label>Lokasi Properti</label>
             <div id="map"
                 style="
@@ -103,64 +116,42 @@
             </div>
         </div>
 
-        <div class="row">
-
+        <div class="row mt-3">
             <div class="col-6">
-                <div class="mb-3">
-                    <label>Latitude</label>
-                    <input type="text"
-                        name="latitude"
-                        id="latitude"
-                        value="{{ old('latitude') }}"
-                        class="form-control @error('latitude') is-invalid @enderror"
-                        readonly>
-                    @error('latitude')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
+                <label>Latitude</label>
+                <input type="text"
+                    name="latitude"
+                    id="latitude"
+                    class="form-control"
+                    readonly>
             </div>
 
             <div class="col-6">
-                <div class="mb-3">
-                    <label>Longitude</label>
-                    <input type="text"
-                        name="longitude"
-                        id="longitude"
-                        value="{{ old('longitude') }}"
-                        class="form-control @error('longitude') is-invalid @enderror"
-                        readonly>
-                    @error('longitude')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror                
-                </div>
+                <label>Longitude</label>
+                <input type="text"
+                    name="longitude"
+                    id="longitude"
+                    class="form-control"
+                    readonly>
             </div>
         </div>
 
         <div class="mb-3">
-
             <label>Foto Properti</label>
-
             <input type="file"
                 name="images[]"
                 class="form-control"
                 multiple>
-
         </div>
 
         <div class="mb-3">
             <label>Deskripsi</label>
-
             <textarea name="description"
                 rows="5"
                 class="form-control"></textarea>
         </div>
 
         <div class="form-check mb-3">
-
             <input type="checkbox"
                 class="form-check-input"
                 name="is_featured"
@@ -198,7 +189,7 @@
 
         /*
         |--------------------------------------------------------------------------
-        | TILE
+        | TILE LAYER
         |--------------------------------------------------------------------------
         */
 
@@ -218,13 +209,16 @@
 
         /*
         |--------------------------------------------------------------------------
-        | CLICK MAP
+        | SET MARKER FUNCTION
         |--------------------------------------------------------------------------
         */
 
-        map.on('click', function(e) {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
+        function setMarker(lat, lng) {
+            /*
+            |--------------------------------------------------------------------------
+            | INPUT VALUE
+            |--------------------------------------------------------------------------
+            */
 
             document.getElementById('latitude').value = lat;
 
@@ -242,18 +236,172 @@
 
             /*
             |--------------------------------------------------------------------------
-            | ADD NEW MARKER
+            | CREATE NEW MARKER
             |--------------------------------------------------------------------------
             */
 
-            marker = L.marker([lat, lng])
-                .addTo(map);
+            marker = L.marker([lat, lng], {
+                draggable: true
+            }).addTo(map);
+
+            /*
+            |--------------------------------------------------------------------------
+            | DRAG MARKER
+            |--------------------------------------------------------------------------
+            */
+
+            marker.on('dragend', function(e) {
+                const position = marker.getLatLng();
+
+                document.getElementById('latitude').value =
+                    position.lat;
+
+                document.getElementById('longitude').value =
+                    position.lng;
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | MOVE MAP
+            |--------------------------------------------------------------------------
+            */
+
+            map.setView([lat, lng], 16);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | CLICK MAP
+        |--------------------------------------------------------------------------
+        */
+
+        map.on('click', function(e) {
+            setMarker(
+                e.latlng.lat,
+                e.latlng.lng
+            );
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADDRESS SEARCH
+        |--------------------------------------------------------------------------
+        */
+
+        const searchInput =
+            document.getElementById('address-search');
+
+        const suggestions =
+            document.getElementById('suggestions');
+
+        let timeout = null;
+
+        /*
+        |--------------------------------------------------------------------------
+        | INPUT EVENT
+        |--------------------------------------------------------------------------
+        */
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+
+            const query = this.value;
+
+            /*
+            |--------------------------------------------------------------------------
+            | MIN CHARACTER
+            |--------------------------------------------------------------------------
+            */
+
+            if (query.length < 3) {
+                suggestions.innerHTML = '';
+                return;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | DEBOUNCE
+            |--------------------------------------------------------------------------
+            */
+
+            timeout = setTimeout(async () => {
+                /*
+                |--------------------------------------------------------------------------
+                | FETCH NOMINATIM
+                |--------------------------------------------------------------------------
+                */
+
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${query}`
+                );
+
+                const data = await response.json();
+
+                suggestions.innerHTML = '';
+
+                /*
+                |--------------------------------------------------------------------------
+                | LOOP RESULT
+                |--------------------------------------------------------------------------
+                */
+
+                data.forEach(place => {
+                    const item =
+                        document.createElement('button');
+
+                    item.type = 'button';
+
+                    item.className =
+                        'list-group-item list-group-item-action';
+
+                    item.innerText =
+                        place.display_name;
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | CLICK SUGGESTION
+                    |--------------------------------------------------------------------------
+                    */
+
+                    item.addEventListener('click', function() {
+                        const lat = place.lat;
+                        const lng = place.lon;
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | SET MARKER
+                        |--------------------------------------------------------------------------
+                        */
+
+                        setMarker(lat, lng);
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | CLEAR SUGGESTION
+                        |--------------------------------------------------------------------------
+                        */
+
+                        suggestions.innerHTML = '';
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | INPUT VALUE
+                        |--------------------------------------------------------------------------
+                        */
+
+                        searchInput.value =
+                            place.display_name;
+                    });
+
+                    suggestions.appendChild(item);
+                });
+
+            }, 500);
 
         });
 
     });
 </script>
-
 @endpush
 
 @endsection
