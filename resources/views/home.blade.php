@@ -111,6 +111,7 @@
                                 </div>
 
                                 <div class="location">
+                                    <i class="bi bi-geo-alt"></i>
                                     {{ $property->location }}
                                 </div>
 
@@ -188,6 +189,7 @@
                             </div>
 
                             <div class="location">
+                                <i class="bi bi-geo-alt"></i>
                                 {{ $property->location }}
                             </div>
 
