@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Cari Properti - DibsPro')
 @push('styles')
-<link rel="stylesheet" href="{{ asset('build/assets/css/search.css') }}">
-<link rel="stylesheet" href="{{ asset('build/assets/css/property.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/search.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/property.css') }}">
 @endpush
 
 @section('content')

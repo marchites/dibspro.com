@@ -9,7 +9,7 @@
 <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}">
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('build/assets/css/article.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/article.css') }}">
 @endpush
 
 @section('content')

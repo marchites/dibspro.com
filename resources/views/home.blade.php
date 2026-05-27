@@ -3,7 +3,7 @@
 @section('title', 'DibsPro - Temukan Rumah Impianmu')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('build/assets/css/home.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
 @endpush
 
 @section('content')
@@ -12,7 +12,7 @@
     <div class="header animated-gradient">
 
         <h6 class="mb-0">
-            <img src="{{ asset('build/assets/images/logo.svg') }}" alt="DibsPro Logo" style="height:40px; margin-left:15px;">
+            <img src="{{ asset('assets/images/logo.svg') }}" alt="DibsPro Logo" style="height:40px; margin-left:15px;">
         </h6>
 
         @if(auth()->check())

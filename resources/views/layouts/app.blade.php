@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <link rel="stylesheet" href="{{ asset('build/assets/css/style.css') }}">
-    <link rel="icon"type="image/png" href="{{ asset('build/assets/images/favicon.svg') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="icon"type="image/png" href="{{ asset('assets/images/favicon.svg') }}">
     @stack('styles')
 </head>
 
@@ -60,7 +60,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{{ asset('build/assets/js/swiper.js') }}"></script>
+    <script src="{{ asset('assets/js/swiper.js') }}"></script>
 </body>
 
 </html>

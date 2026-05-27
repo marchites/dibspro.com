@@ -20,7 +20,7 @@
 
     {{-- Custom CSS --}}
     <link rel="stylesheet"
-        href="{{ asset('build/assets/css/property.css') }}">
+        href="{{ asset('assets/css/property.css') }}">
 
     <style>
         body {
