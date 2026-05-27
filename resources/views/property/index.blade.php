@@ -2,37 +2,92 @@
 @section('title', 'Cari Properti - DibsPro')
 @push('styles')
 <link rel="stylesheet" href="{{ asset('build/assets/css/search.css') }}">
+<link rel="stylesheet" href="{{ asset('build/assets/css/property.css') }}">
 @endpush
 
 @section('content')
 <div class="section">
     <div class="search-page">
 
-        {{-- FILTER --}}
+        {{-- SEARCH + FILTER --}}
         <div class="section">
-            <form method="GET" action="/property" class="filter-box">
 
-                <input type="text" name="keyword" class="form-control"
-                    placeholder="Cari properti..."
-                    value="{{ request('keyword') }}">
+            <form method="GET" action="/property">
 
-                <select name="type" class="form-control">
-                    <option value="">Semua Tipe</option>
-                    <option value="rumah" {{ request('type') == 'rumah' ? 'selected' : '' }}>Rumah</option>
-                    <option value="apartemen" {{ request('type') == 'apartemen' ? 'selected' : '' }}>Apartemen</option>
-                    <option value="tanah" {{ request('type') == 'tanah' ? 'selected' : '' }}>Tanah</option>
-                </select>
+                {{-- TOP SEARCH --}}
+                <div class="search-top">
 
-                <input type="number" name="min_price" class="form-control"
-                    placeholder="Harga minimum"
-                    value="{{ request('min_price') }}">
+                    {{-- SEARCH --}}
+                    <div class="search-input-wrap">
 
-                <input type="number" name="max_price" class="form-control"
-                    placeholder="Harga maksimum"
-                    value="{{ request('max_price') }}">
+                        <i class="bi bi-search search-icon"></i>
 
-                <button class="btn btn-primary w-100 mt-2">Cari</button>
+                        <input
+                            type="text"
+                            name="keyword"
+                            class="search-input"
+                            placeholder="Cari properti..."
+                            value="{{ request('keyword') }}">
+
+                    </div>
+
+                    {{-- FILTER BUTTON --}}
+                    <button
+                        type="button"
+                        class="filter-btn"
+                        id="toggleFilter">
+
+                        <i class="bi bi-sliders"></i>
+
+                    </button>
+
+                </div>
+
+                {{-- DROPDOWN FILTER --}}
+                <div class="filter-dropdown" id="filterDropdown">
+
+                    <select name="type" class="form-control custom-input">
+                        <option value="">Semua Tipe</option>
+
+                        <option value="rumah"
+                            {{ request('type') == 'rumah' ? 'selected' : '' }}>
+                            Rumah
+                        </option>
+
+                        <option value="apartemen"
+                            {{ request('type') == 'apartemen' ? 'selected' : '' }}>
+                            Apartemen
+                        </option>
+
+                        <option value="tanah"
+                            {{ request('type') == 'tanah' ? 'selected' : '' }}>
+                            Tanah
+                        </option>
+
+                    </select>
+
+                    <input
+                        type="number"
+                        name="min_price"
+                        class="form-control custom-input"
+                        placeholder="Harga minimum"
+                        value="{{ request('min_price') }}">
+
+                    <input
+                        type="number"
+                        name="max_price"
+                        class="form-control custom-input"
+                        placeholder="Harga maksimum"
+                        value="{{ request('max_price') }}">
+
+                    <button class="btn btn-primary w-100 mt-2 rounded-pill">
+                        Cari Properti
+                    </button>
+
+                </div>
+
             </form>
+
         </div>
 
         {{-- HASIL --}}
@@ -66,11 +121,33 @@
             @endforelse
 
             {{-- PAGINATION --}}
-            <div class="mt-3">
+            <div class="d-flex justify-content-center mt-4">
                 {{ $properties->withQueryString()->links() }}
             </div>
         </div>
 
     </div>
 </div>
+
+<script>
+    const toggleBtn =
+        document.getElementById('toggleFilter');
+
+    const filterDropdown =
+        document.getElementById('filterDropdown');
+
+    toggleBtn.addEventListener('click', function() {
+
+        if (filterDropdown.style.display === 'block') {
+
+            filterDropdown.style.display = 'none';
+
+        } else {
+
+            filterDropdown.style.display = 'block';
+
+        }
+
+    });
+</script>
 @endsection
