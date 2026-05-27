@@ -19,6 +19,7 @@ class Property extends Model
         'bathroom',
         'land_size',
         'building_size',
+        'phone',
         'description',
         'address',
         'latitude',

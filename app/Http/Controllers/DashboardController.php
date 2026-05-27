@@ -59,6 +59,7 @@ class DashboardController extends Controller
             'bathroom' => $request->bathroom,
             'building_size' => $request->building_size,
             'land_size' => $request->land_size,
+            'phone' => $request->phone,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'status' => 'available',
@@ -111,9 +112,9 @@ class DashboardController extends Controller
             'bathroom' => $request->bathroom,
             'land_size' => $request->land_size,
             'building_size' => $request->building_size,
+            'phone' => $request->phone,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'phone' => $request->phone,
             'is_featured' => $request->is_featured ? 1 : 0,
         ]);
 

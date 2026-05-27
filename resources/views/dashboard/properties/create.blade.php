@@ -155,7 +155,8 @@
             <input type="checkbox"
                 class="form-check-input"
                 name="is_featured"
-                value="1">
+                value="1"
+                {{ old('is_featured') ? 'checked' : '' }}>
 
             <label class="form-check-label">
                 Properti Unggulan
