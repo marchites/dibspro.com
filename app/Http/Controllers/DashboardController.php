@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\PropertyImage;
 use App\Models\ArticleCategory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -103,6 +104,8 @@ class DashboardController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        $request->validate(['title' => 'required', 'price' => 'required|numeric', 'location' => 'required', 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',]);
+
         $property->update([
             'title' => $request->title,
             'price' => $request->price,
@@ -118,6 +121,14 @@ class DashboardController extends Controller
             'is_featured' => $request->is_featured ? 1 : 0,
         ]);
 
+        /* |-------------------------------------------------------------------------- | UPLOAD MULTIPLE IMAGE |-------------------------------------------------------------------------- */
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('properties', 'public');
+                $property->images()->create(['image_path' => $path]);
+            }
+        }
+
         return redirect('/dashboard/properties')
             ->with('success', 'Properti berhasil diupdate');
     }
@@ -129,6 +140,34 @@ class DashboardController extends Controller
 
         return back()->with('success', 'Properti berhasil dihapus');
     }
+
+
+    public function deletePropertyImage($id)
+    {
+        $image = PropertyImage::findOrFail($id);
+
+        /*
+    |--------------------------------------------------------------------------
+    | DELETE FILE STORAGE
+    |--------------------------------------------------------------------------
+    */
+
+        if (Storage::disk('public')->exists($image->image_path)) {
+
+            Storage::disk('public')->delete($image->image_path);
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | DELETE DATABASE
+    |--------------------------------------------------------------------------
+    */
+
+        $image->delete();
+
+        return back()->with('success', 'Foto berhasil dihapus');
+    }
+
 
     public function articles()
     {

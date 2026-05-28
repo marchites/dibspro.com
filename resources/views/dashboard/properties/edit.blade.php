@@ -6,10 +6,7 @@
 
 <div class="section">
 
-    <form action="/dashboard/properties/{{ $property->id }}/update"
-        method="POST"
-        enctype="multipart/form-data">
-
+    <form action="/dashboard/properties/{{ $property->id }}/update" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -144,26 +141,6 @@
 
         </div>
 
-        <div class="row">
-
-            @foreach($property->images as $image)
-
-            <div class="col-4 mb-2">
-
-                <img src="{{ asset('storage/' . $image->image_path) }}"
-                    style="
-                    width:100%;
-                    height:100px;
-                    object-fit:cover;
-                    border-radius:12px;
-                 ">
-
-            </div>
-
-            @endforeach
-
-        </div>
-
         <div class="mb-3">
             <label>Deskripsi</label>
 
@@ -191,6 +168,36 @@
 
     </form>
 
+    <div class="row mt-4">
+        @foreach($property->images as $image)
+        <div class="col-4 mb-3">
+            <div class="card">
+                <img
+                    src="{{ asset('storage/' . $image->image_path) }}"
+                    class="card-img-top"
+                    style="
+                    height:120px;
+                    object-fit:cover;
+                ">
+                <div class="card-body p-2">
+                    <form
+                        action="/dashboard/property/image/{{ $image->id }}"
+                        method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button
+                            type="submit"
+                            class="btn btn-danger btn-sm w-100">
+                            <i class="bi bi-trash"></i>
+                            Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
 </div>
 
 @push('scripts')
@@ -204,9 +211,13 @@
         |--------------------------------------------------------------------------
         */
 
+        const lat = "{{ $property->latitude ?? '-6.914744' }}";
+
+        const lng = "{{ $property->longitude ?? '107.609810' }}";
+
         const map = L.map('map').setView(
-            [-6.914744, 107.609810],
-            13
+            [lat, lng],
+            15
         );
 
         /*
@@ -228,6 +239,23 @@
         */
 
         let marker;
+
+        /*
+        |--------------------------------------------------------------------------
+        | LOAD EXISTING LOCATION
+        |--------------------------------------------------------------------------
+        */
+
+        if (lat && lng) {
+
+            setTimeout(() => {
+
+                setMarker(lat, lng);
+
+            }, 500);
+
+        }
+
 
         /*
         |--------------------------------------------------------------------------
