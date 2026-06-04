@@ -28,7 +28,7 @@
             <div class="card mb-2">
 
                 <img src="{{ asset('storage/' . $article->thumbnail) }}"
-                    style="height:120px; object-fit:cover;">
+                    style="height:120px; object-fit:cover; border-radius: 5px 5px 0 0;">
 
                 <div class="card-body">
 

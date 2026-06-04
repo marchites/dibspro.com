@@ -9,16 +9,93 @@ use App\Models\Category;
 use App\Models\Setting;
 use App\Models\PropertyImage;
 use App\Models\ArticleCategory;
+use App\Models\PropertyView;
+use App\Models\PropertyClick;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     //
     public function index()
     {
+        $totalProperties = Property::count();
+
+        $totalViews = PropertyView::count();
+
+        $totalWhatsappClicks = PropertyClick::where(
+            'type',
+            'whatsapp'
+        )->count();
+
+        $todayViews = PropertyView::whereDate(
+        'created_at',
+        today()
+    )->count();
+
+    $monthViews = PropertyView::whereMonth(
+        'created_at',
+        now()->month
+    )
+    ->whereYear(
+        'created_at',
+        now()->year
+    )
+    ->count();
+
+    $todayWhatsapp = PropertyClick::where(
+        'type',
+        'whatsapp'
+    )
+    ->whereDate(
+        'created_at',
+        today()
+    )
+    ->count();
+
+    $monthWhatsapp = PropertyClick::where(
+        'type',
+        'whatsapp'
+    )
+    ->whereMonth(
+        'created_at',
+        now()->month
+    )
+    ->whereYear(
+        'created_at',
+        now()->year
+    )
+    ->count();
+
+    $dailyViews = PropertyView::select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->whereDate(
+            'created_at',
+            '>=',
+            now()->subDays(30)
+        )
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+    $topProperties = Property::withCount('views')
+        ->orderByDesc('views_count')
+        ->take(10)
+        ->get();
+
         return view('dashboard.index', [
-            'totalProperties' => Property::count(),
+            'totalProperties' => $totalProperties,
+            'totalViews' => $totalViews,
+            'totalWhatsappClicks' => $totalWhatsappClicks,
+            'todayViews' => $todayViews,
+            'monthViews' => $monthViews,
+            'todayWhatsapp' => $todayWhatsapp,
+            'monthWhatsapp' => $monthWhatsapp,
+            'dailyViews' => $dailyViews,
+            'topProperties' => $topProperties,
             'featuredProperties' => Property::where('is_featured', true)->count(),
             'totalArticles' => Article::count(),
             'latestProperties' => Property::latest()->take(5)->get(),

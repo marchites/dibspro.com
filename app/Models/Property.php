@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PropertyView;
+use App\Models\PropertyClick;
 
 class Property extends Model
 {
@@ -30,5 +32,15 @@ class Property extends Model
     public function images()
     {
         return $this->hasMany(PropertyImage::class);
+    }
+
+    public function views()
+    {
+        return $this->hasMany(PropertyView::class);
+    }
+
+    public function clicks()
+    {
+        return $this->hasMany(PropertyClick::class);
     }
 }

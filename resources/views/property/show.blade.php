@@ -233,27 +233,27 @@
 
     @php
 
-        $message = urlencode(
-            "Halo, saya tertarik dengan properti: " . $property->title
-        );
+    $message = urlencode(
+    "Halo, saya tertarik dengan properti: " . $property->title
+    );
 
-        /*
-        |--------------------------------------------------------------------------
-        | PHONE FORMAT
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | PHONE FORMAT
+    |--------------------------------------------------------------------------
+    */
 
-        $phone = preg_replace('/^0/', '62', $property->phone);
+    $phone = preg_replace('/^0/', '62', $property->phone);
 
-        /*
-        |--------------------------------------------------------------------------
-        | DEFAULT BANDUNG
-        |--------------------------------------------------------------------------
-        */
+    /*
+    |--------------------------------------------------------------------------
+    | DEFAULT BANDUNG
+    |--------------------------------------------------------------------------
+    */
 
-        $latitude = $property->latitude ?? '-6.914744';
+    $latitude = $property->latitude ?? '-6.914744';
 
-        $longitude = $property->longitude ?? '107.609810';
+    $longitude = $property->longitude ?? '107.609810';
 
     @endphp
 
@@ -305,33 +305,33 @@
 
                 @forelse ($property->images as $key => $image)
 
-                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
 
-                        <div
-                            style="
+                    <div
+                        style="
                                 background-image:url('{{ asset('storage/' . $image->image_path) }}');
                             ">
-                        </div>
-
                     </div>
+
+                </div>
 
                 @empty
 
-                    <div class="carousel-item active">
+                <div class="carousel-item active">
 
-                        <div
-                            style="
+                    <div
+                        style="
                                 background:#ddd;
                                 display:flex;
                                 align-items:center;
                                 justify-content:center;
                             ">
 
-                            No Image
-
-                        </div>
+                        No Image
 
                     </div>
+
+                </div>
 
                 @endforelse
 
@@ -454,14 +454,11 @@
         </a>
 
         {{-- WHATSAPP --}}
-        <a href="https://wa.me/{{ $phone }}?text={{ $message }}"
+        <a
+            href="{{ route('property.whatsapp', $property->id) }}"
             target="_blank"
-            class="btn-wa">
-
-            <i class="bi bi-whatsapp me-2"></i>
-
+            class="btn btn-success">
             Hubungi via WhatsApp
-
         </a>
 
     </div>

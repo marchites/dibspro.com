@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Property;
+use App\Models\PropertyClick;
+use App\Models\PropertyView;
 
 class PropertyController extends Controller
 {
@@ -49,6 +51,19 @@ class PropertyController extends Controller
     {
         $property = Property::where('slug', $slug)->firstOrFail();
 
+         $sessionKey = 'property_viewed_'.$property->id;
+
+        if (!session()->has($sessionKey)) {
+
+            PropertyView::create([
+                'property_id' => $property->id,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ]);
+
+            session([$sessionKey => true]);
+        }
+        
         return view('property.show', compact('property'));
     }
 
@@ -81,5 +96,18 @@ class PropertyController extends Controller
         $properties = Property::whereIn('id', $favorites)->get();
 
         return view('property.favorite', compact('properties'));
+    }
+
+    public function whatsapp(Property $property)
+    {
+        PropertyClick::create([
+            'property_id' => $property->id,
+            'type' => 'whatsapp',
+            'ip_address' => request()->ip(),
+        ]);
+
+        return redirect()->away(
+            'https://wa.me/' . preg_replace('/[^0-9]/', '', $property->phone)
+        );
     }
 }

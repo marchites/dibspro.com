@@ -29,6 +29,10 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/property/{slug}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/property', [PropertyController::class, 'index'])->name('property');
+Route::get(
+    '/property/{property}/whatsapp',
+    [PropertyController::class, 'whatsapp']
+)->name('property.whatsapp');
 
 // ARTICLES
 Route::get('/article', [ArticleController::class, 'index'])->name('article');
