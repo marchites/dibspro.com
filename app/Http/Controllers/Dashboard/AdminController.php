@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Article;
-use App\Models\Category;
 use App\Models\Setting;
 use App\Models\PropertyImage;
 use App\Models\ArticleCategory;
 use App\Models\PropertyView;
 use App\Models\PropertyClick;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 
-class DashboardController extends Controller
+class AdminController extends Controller
 {
     //
     public function index()
@@ -121,7 +121,7 @@ class DashboardController extends Controller
             ->orderBy('label')
             ->get();
 
-        return view('dashboard.index', [
+        return view('dashboard.admin.index', [
             'totalProperties' => $totalProperties,
             'totalViews' => $totalViews,
             'totalWhatsappClicks' => $totalWhatsappClicks,
@@ -145,12 +145,12 @@ class DashboardController extends Controller
     {
         $properties = Property::latest()->paginate(10);
 
-        return view('dashboard.properties.index', compact('properties'));
+        return view('dashboard.admin.properties.index', compact('properties'));
     }
 
     public function createProperty()
     {
-        return view('dashboard.properties.create');
+        return view('dashboard.admin.properties.create');
     }
 
     public function storeProperty(Request $request)
@@ -213,7 +213,7 @@ class DashboardController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        return view('dashboard.properties.edit', compact('property'));
+        return view('dashboard.admin.properties.edit', compact('property'));
     }
 
     public function updateProperty(Request $request, $id)
@@ -288,7 +288,7 @@ class DashboardController extends Controller
     public function articles()
     {
         $articles = Article::latest()->paginate(10);
-        return view('dashboard.articles.index', compact('articles'));
+        return view('dashboard.admin.articles.index', compact('articles'));
     }
 
     public function createArticle()
@@ -296,7 +296,7 @@ class DashboardController extends Controller
         $categories = ArticleCategory::latest()->get();
 
         return view(
-            'dashboard.articles.create',
+            'dashboard.admin.articles.create',
             compact('categories')
         );
     }
@@ -340,7 +340,7 @@ class DashboardController extends Controller
         $article = Article::findOrFail($id);
         $categories = ArticleCategory::latest()->get();
         return view(
-            'dashboard.articles.edit',
+            'dashboard.admin.articles.edit',
             compact('article', 'categories')
         );
     }
@@ -420,7 +420,7 @@ class DashboardController extends Controller
     {
         $settings = Setting::pluck('value', 'key');
 
-        return view('dashboard.settings.index', compact('settings'));
+        return view('dashboard.admin.settings.index', compact('settings'));
     }
 
     public function updateSettings(Request $request)

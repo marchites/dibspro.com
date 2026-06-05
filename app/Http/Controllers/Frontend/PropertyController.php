@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\PropertyClick;
 use App\Models\PropertyView;
@@ -44,7 +45,7 @@ class PropertyController extends Controller
         // Urutan terbaru + pagination
         $properties = $query->latest()->paginate(10);
 
-        return view('property.index', compact('properties'));
+        return view('frontend.property.index', compact('properties'));
     }
 
     public function show($slug)
@@ -64,7 +65,7 @@ class PropertyController extends Controller
             session([$sessionKey => true]);
         }
         
-        return view('property.show', compact('property'));
+        return view('frontend.property.show', compact('property'));
     }
 
     public function toggleFavorite(Request $request)
@@ -95,7 +96,7 @@ class PropertyController extends Controller
 
         $properties = Property::whereIn('id', $favorites)->get();
 
-        return view('property.favorite', compact('properties'));
+        return view('frontend.property.favorite', compact('properties'));
     }
 
     public function whatsapp(Property $property)

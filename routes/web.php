@@ -1,90 +1,85 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\AccountController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Dashboard\AdminController;
+use App\Http\Controllers\Dashboard\AgentController;
+use App\Http\Controllers\Frontend\ArticleController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\PropertyController;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('home');
-});
-
-// AUTHENTICATION
-Route::view('/login', 'auth.login')->name('login');
+// NON MIDDLEWARE ROUTES
+// Auth Routes
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginProcess']);
 
-Route::get('/register', [AuthController::class, 'register']);
+Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerProcess']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
-// PROPERTY
+// Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/property/{slug}', [PropertyController::class, 'show'])->name('property.show');
 Route::get('/property', [PropertyController::class, 'index'])->name('property');
-Route::get(
-    '/property/{property}/whatsapp',
-    [PropertyController::class, 'whatsapp']
-)->name('property.whatsapp');
+Route::get('/property/{property}/whatsapp', [PropertyController::class, 'whatsapp'])->name('property.whatsapp');
 
-// ARTICLES
+// Article Routes
 Route::get('/article', [ArticleController::class, 'index'])->name('article');
 Route::get('/article/{slug}', [ArticleController::class, 'show'])->name('article.show');
 Route::get('/article/category/{slug}', [ArticleController::class, 'category']);
 
+// MIDDLEWARE FOR AUTHENTICATED USERS
 Route::middleware('auth')->group(function () {
 
-    // USER ACCOUNT
-    Route::get('/account', function () {
-        return view('account.index');
-    });
+    // User Account
+    Route::get('/account', [AccountController::class, 'index'])->name('account.index');
 
-    // FAVORITE PROPERTIES
+    // Favorite Properties
     Route::get('/favorite', [PropertyController::class, 'favoriteList'])->name('favorite');
     Route::post('/favorite/toggle', [PropertyController::class, 'toggleFavorite']);
 
 });
 
+// MIDDLEWARE FOR ADMIN
 Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
 
-    // PROPERTY
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/properties', [DashboardController::class, 'properties']);
-    Route::get('/properties/create', [DashboardController::class, 'createProperty']);
-    Route::post('/properties/store', [DashboardController::class, 'storeProperty']);
-    Route::get('/properties/{id}/edit', [DashboardController::class, 'editProperty']);
-    Route::put('/properties/{id}/update', [DashboardController::class, 'updateProperty']);
-    Route::delete('/properties/{id}/delete', [DashboardController::class, 'deleteProperty']);
-    Route::delete('/property/image/{id}', [DashboardController::class, 'deletePropertyImage']);
+    // Dashboard Home
+    Route::get('/', [AdminController::class, 'index']);
+
+    // Property Management
+    Route::get('/properties', [AdminController::class, 'properties']);
+    Route::get('/properties/create', [AdminController::class, 'createProperty']);
+    Route::post('/properties/store', [AdminController::class, 'storeProperty']);
+    Route::get('/properties/{id}/edit', [AdminController::class, 'editProperty']);
+    Route::put('/properties/{id}/update', [AdminController::class, 'updateProperty']);
+    Route::delete('/properties/{id}/delete', [AdminController::class, 'deleteProperty']);
+    Route::delete('/property/image/{id}', [AdminController::class, 'deletePropertyImage']);
     
+    // Article Management
+    Route::get('/articles', [AdminController::class, 'articles']);
+    Route::get('/articles/create', [AdminController::class, 'createArticle']);
+    Route::post('/articles/store', [AdminController::class, 'storeArticle']);
+    Route::get('/articles/{id}/edit', [AdminController::class, 'editArticle']);
+    Route::put('/articles/{id}/update', [AdminController::class, 'updateArticle']);
+    Route::delete('/articles/{id}/delete', [AdminController::class, 'deleteArticle']);
+    Route::put('/properties/{id}/toggle-status',[AdminController::class, 'togglePropertyStatus']);
 
-    // ARTICLE
-    Route::get('/articles', [DashboardController::class, 'articles']);
-    Route::get('/articles/create', [DashboardController::class, 'createArticle']);
-    Route::post('/articles/store', [DashboardController::class, 'storeArticle']);
-    Route::get('/articles/{id}/edit', [DashboardController::class, 'editArticle']);
-    Route::put('/articles/{id}/update', [DashboardController::class, 'updateArticle']);
-    Route::delete('/articles/{id}/delete', [DashboardController::class, 'deleteArticle']);
-    Route::put('/properties/{id}/toggle-status',[DashboardController::class, 'togglePropertyStatus']);
-
-    // SETTINGS
-    Route::get('/settings', [DashboardController::class, 'settings']);
-    Route::post('/settings/update', [DashboardController::class, 'updateSettings']);
+    // Settings
+    Route::get('/settings', [AdminController::class, 'settings']);
+    Route::post('/settings/update', [AdminController::class, 'updateSettings']);
 
 });
 
+// MIDDLEWARE FOR AGENT
 Route::middleware(['auth', 'agent'])->prefix('agent')->group(function () {
 
-    // AGENT DASHBOARD
-    Route::get('/dashboard', function () {
-        return view('agent.dashboard');
-    });
+    // Agent Dashboard
+    Route::get('/dashboard', [AgentController::class, 'index'])->name('agent.dashboard');
 
 });

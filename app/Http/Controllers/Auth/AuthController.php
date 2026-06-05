@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Controllers\Controller;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -19,7 +19,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        return view('auth.login');
+        return view('auth.login.index');
     }
 
     /*
@@ -30,7 +30,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return view('auth.register');
+        return view('auth.register.index');
     }
 
     /*

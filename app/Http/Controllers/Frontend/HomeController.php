@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Property;
 use App\Models\Article;
 
@@ -23,6 +24,6 @@ class HomeController extends Controller
         // Artikel
         $articles = Article::latest()->take(3)->get();
 
-        return view('home', compact('featured', 'properties', 'articles'));
+        return view('frontend.home.index', compact('featured', 'properties', 'articles'));
     }
 }
