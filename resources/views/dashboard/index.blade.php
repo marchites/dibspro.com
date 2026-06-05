@@ -185,50 +185,114 @@
                 Statistik Properti
             </div>
 
-            <div class="row">
+            <div class="btn-group mb-4" role="group">
 
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6>Total Properti</h6>
-                            <h2>{{ number_format($totalProperties) }}</h2>
+                <button
+                    class="btn btn-primary stats-tab active"
+                    data-target="daily">
+                    Harian
+                </button>
+
+                <button
+                    class="btn btn-outline-primary stats-tab"
+                    data-target="monthly">
+                    Bulanan
+                </button>
+
+                <button
+                    class="btn btn-outline-primary stats-tab"
+                    data-target="yearly">
+                    Tahunan
+                </button>
+
+            </div>
+
+            <div id="daily-section">
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>View Hari Ini</h6>
+                                <h2>{{ number_format($todayViews) }}</h2>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>WA Hari Ini</h6>
+                                <h2>{{ number_format($todayWhatsapp) }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6>View Hari Ini</h6>
-                            <h2>{{ number_format($todayViews) }}</h2>
+            </div>
+
+            <div id="monthly-section" style="display:none;">
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>View Bulan Ini</h6>
+                                <h2>{{ number_format($monthViews) }}</h2>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>WA Bulan Ini</h6>
+                                <h2>{{ number_format($monthWhatsapp) }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6>View Bulan Ini</h6>
-                            <h2>{{ number_format($monthViews) }}</h2>
-                        </div>
-                    </div>
-                </div>
+            </div>
 
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6>WA Bulan Ini</h6>
-                            <h2>{{ number_format($monthWhatsapp) }}</h2>
+            <div id="yearly-section" style="display:none;">
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>View Tahun Ini</h6>
+                                <h2>{{ number_format($yearViews) }}</h2>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>WA Tahun Ini</h6>
+                                <h2>{{ number_format($yearWhatsapp) }}</h2>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
 
             <div class="card mt-4">
 
-                <div class="card-header">
-                    View 30 Hari Terakhir
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <span id="chart-title">
+                        View 30 Hari Terakhir
+                    </span>
+
                 </div>
 
                 <div class="card-body">
@@ -281,6 +345,7 @@
             </div>
 
         </div>
+
 
 
 
@@ -366,23 +431,110 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+
+    <script>
+        document.querySelectorAll('.stats-tab').forEach(button => {
+
+            button.addEventListener('click', function() {
+
+                document.querySelectorAll('.stats-tab').forEach(btn => {
+
+                    btn.classList.remove('btn-primary');
+                    btn.classList.remove('active');
+
+                    btn.classList.add('btn-outline-primary');
+
+                });
+
+                this.classList.remove('btn-outline-primary');
+                this.classList.add('btn-primary');
+                this.classList.add('active');
+
+                document.getElementById('daily-section').style.display = 'none';
+                document.getElementById('monthly-section').style.display = 'none';
+                document.getElementById('yearly-section').style.display = 'none';
+
+                document.getElementById(
+                    this.dataset.target + '-section'
+                ).style.display = 'block';
+
+            });
+
+        });
+    </script>
+
     <script>
         const dailyViews = @json($dailyViews);
-        const labels = dailyViews.map(item => item.date);
-        const values = dailyViews.map(item => item.total);
-        new Chart(
-            document.getElementById('viewChart'), {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Views',
-                        data: values,
-                        tension: 0.4
-                    }]
-                }
+        const monthlyViews = @json($monthlyViews);
+        const yearlyViews = @json($yearlyViews);
+
+        let chart;
+
+        function renderChart(data, title) {
+            const labels = data.map(item => item.label);
+            const values = data.map(item => item.total);
+
+            document.getElementById('chart-title').innerText = title;
+
+            if (chart) {
+                chart.destroy();
             }
+
+            chart = new Chart(
+                document.getElementById('viewChart'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Views',
+                            data: values,
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                }
+            );
+        }
+
+        renderChart(
+            dailyViews,
+            'View 30 Hari Terakhir'
         );
+
+        document.querySelectorAll('.stats-tab').forEach(button => {
+
+            button.addEventListener('click', function() {
+
+                const target = this.dataset.target;
+
+                if (target === 'daily') {
+                    renderChart(
+                        dailyViews,
+                        'View 30 Hari Terakhir'
+                    );
+                }
+
+                if (target === 'monthly') {
+                    renderChart(
+                        monthlyViews,
+                        'View 12 Bulan Terakhir'
+                    );
+                }
+
+                if (target === 'yearly') {
+                    renderChart(
+                        yearlyViews,
+                        'View Per Tahun'
+                    );
+                }
+
+            });
+
+        });
     </script>
 
     @endsection

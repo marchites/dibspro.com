@@ -30,61 +30,96 @@ class DashboardController extends Controller
         )->count();
 
         $todayViews = PropertyView::whereDate(
-        'created_at',
-        today()
-    )->count();
+            'created_at',
+            today()
+        )->count();
 
-    $monthViews = PropertyView::whereMonth(
-        'created_at',
-        now()->month
-    )
-    ->whereYear(
-        'created_at',
-        now()->year
-    )
-    ->count();
+        $monthViews = PropertyView::whereMonth(
+            'created_at',
+            now()->month
+        )
+            ->whereYear(
+                'created_at',
+                now()->year
+            )
+            ->count();
 
-    $todayWhatsapp = PropertyClick::where(
-        'type',
-        'whatsapp'
-    )
-    ->whereDate(
-        'created_at',
-        today()
-    )
-    ->count();
+        $todayWhatsapp = PropertyClick::where(
+            'type',
+            'whatsapp'
+        )
+            ->whereDate(
+                'created_at',
+                today()
+            )
+            ->count();
 
-    $monthWhatsapp = PropertyClick::where(
-        'type',
-        'whatsapp'
-    )
-    ->whereMonth(
-        'created_at',
-        now()->month
-    )
-    ->whereYear(
-        'created_at',
-        now()->year
-    )
-    ->count();
+        $monthWhatsapp = PropertyClick::where(
+            'type',
+            'whatsapp'
+        )
+            ->whereMonth(
+                'created_at',
+                now()->month
+            )
+            ->whereYear(
+                'created_at',
+                now()->year
+            )
+            ->count();
 
-    $dailyViews = PropertyView::select(
+        $dailyViews = PropertyView::select(
             DB::raw('DATE(created_at) as date'),
             DB::raw('COUNT(*) as total')
         )
-        ->whereDate(
-            'created_at',
-            '>=',
-            now()->subDays(30)
-        )
-        ->groupBy('date')
-        ->orderBy('date')
-        ->get();
+            ->whereDate(
+                'created_at',
+                '>=',
+                now()->subDays(30)
+            )
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
-    $topProperties = Property::withCount('views')
-        ->orderByDesc('views_count')
-        ->take(10)
-        ->get();
+        $topProperties = Property::withCount('views')
+            ->orderByDesc('views_count')
+            ->take(10)
+            ->get();
+
+        $yearViews = PropertyView::whereYear(
+            'created_at',
+            now()->year
+        )->count();
+
+        $yearWhatsapp = PropertyClick::where('type', 'whatsapp')
+            ->whereYear('created_at', now()->year)
+            ->count();
+
+        $dailyViews = PropertyView::select(
+            DB::raw('DATE(created_at) as label'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->whereDate('created_at', '>=', now()->subDays(30))
+            ->groupBy('label')
+            ->orderBy('label')
+            ->get();
+
+        $monthlyViews = PropertyView::select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as label'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->whereDate('created_at', '>=', now()->subMonths(12))
+            ->groupBy('label')
+            ->orderBy('label')
+            ->get();
+
+        $yearlyViews = PropertyView::select(
+            DB::raw('YEAR(created_at) as label'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->groupBy('label')
+            ->orderBy('label')
+            ->get();
 
         return view('dashboard.index', [
             'totalProperties' => $totalProperties,
@@ -99,6 +134,10 @@ class DashboardController extends Controller
             'featuredProperties' => Property::where('is_featured', true)->count(),
             'totalArticles' => Article::count(),
             'latestProperties' => Property::latest()->take(5)->get(),
+            'yearViews' => $yearViews,
+            'yearWhatsapp' => $yearWhatsapp,
+            'monthlyViews' => $monthlyViews,
+            'yearlyViews' => $yearlyViews,
         ]);
     }
 
