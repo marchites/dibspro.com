@@ -29,8 +29,11 @@
 
             <div style="width:80px; height:80px; border-radius:10px; overflow:hidden; background:#eee;">
 
-                <img src="{{ asset('storage/' . $property->images->first()->image_path) ?? 'https://via.placeholder.com/300x200' }}"
-                    style="width:100%; height:100%; object-fit:cover;">
+                <div class="property-img"
+                    style="background-image:url('{{ $property->images->first()?->image_path
+                                ? asset('storage/' . $property->images->first()->image_path)
+                                : 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1470&auto=format&fit=crop' }}')">
+                </div>
 
             </div>
 
