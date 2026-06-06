@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon"type="image/png" href="{{ asset('assets/images/favicon.svg') }}">
+    <link rel="icon"type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     @stack('styles')
 </head>
 

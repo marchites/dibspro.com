@@ -12,7 +12,7 @@
     <div class="header animated-gradient">
 
         <h6 class="mb-0">
-            <img src="{{ asset('assets/images/logo.svg') }}" alt="DibsPro Logo" style="height:40px; margin-left:15px;">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="DibsPro Logo" style="height:45px; margin-left:15px;">
         </h6>
 
         @if(auth()->check())
