@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="icon"type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/calculator.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    
     @stack('styles')
 </head>
 
@@ -39,10 +41,10 @@
             <span>Properti</span>
         </a>
 
-        <a href="/favorite"
-            class="nav-item {{ request()->routeIs('favorite') ? 'active' : '' }}">
-            <i class="bi bi-heart"></i>
-            <span>Favorit</span>
+        <a href="/kalkulator-kpr"
+            class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
+            <i class="bi bi-calculator"></i>
+            <span>KPR</span>
         </a>
 
         <a href="/article"

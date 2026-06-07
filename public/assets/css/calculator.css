@@ -1,0 +1,54 @@
+.bottom-nav{
+    height: 70px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.nav-item i {
+    font-size: 22px;
+}
+
+/* KPR Tengah */
+.nav-item-center {
+    position: relative;
+    top: -20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-item-center i {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(-45deg, #472183, #7a42db, #472183);
+    color: #fff;
+    border-radius: 50%;
+    border: 5px solid #fff;
+
+    line-height: 1;
+
+    box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+
+/* Saat aktif */
+.nav-item-center.active i {
+    background: #084298;
+}
+
+.nav-item-center span {
+    font-weight: 600;
+}

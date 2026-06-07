@@ -105,6 +105,10 @@ body {
         }
 
         .nav-item.active {
-            color: #2c7be5;
+            color: var(--secondary);
             font-weight: 600;
+        }
+
+        .text-primary {
+            color: var(--secondary) !important;
         }

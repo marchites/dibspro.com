@@ -93,7 +93,7 @@
 
     border-radius:16px;
 
-    background:#0d6efd;
+    background: var(--primary);
 
     color:#fff;
 

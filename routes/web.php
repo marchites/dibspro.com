@@ -34,6 +34,9 @@ Route::get('/article', [ArticleController::class, 'index'])->name('article');
 Route::get('/article/{slug}', [ArticleController::class, 'show'])->name('article.show');
 Route::get('/article/category/{slug}', [ArticleController::class, 'category']);
 
+// Kalkulator KPR 
+Route::view('/kalkulator-kpr', 'frontend.kpr.index')->name('kpr.index');
+
 // MIDDLEWARE FOR AUTHENTICATED USERS
 Route::middleware('auth')->group(function () {
 
