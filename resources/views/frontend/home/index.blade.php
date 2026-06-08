@@ -24,8 +24,9 @@
         @else
 
         <a href="/login"
-            class="btn btn-light btn-sm rounded-pill">
-            Masuk
+            class="btn btn-light btn-sm rounded-pill disabled">
+            <i class="bi bi-megaphone"></i>
+            Pasang Iklan
         </a>
         @endif
 
