@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
 
     // User Account
     Route::get('/account', [AccountController::class, 'index'])->name('account.index');
+    Route::get('/account/profile/edit', [AccountController::class, 'editProfile']);
+    Route::post('/account/profile/update', [AccountController::class, 'updateProfile']);
 
     // Favorite Properties
     Route::get('/favorite', [PropertyController::class, 'favoriteList'])->name('favorite');

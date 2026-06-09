@@ -196,8 +196,7 @@
 
         .btn-call {
             flex: 1;
-            border-radius: 12px;
-            height: 48px;
+            border-radius: 7px;
         }
 
         .btn-wa {
@@ -311,7 +310,6 @@
                         <i class="bi bi-share"></i>
 
                     </button>
-
                 </div>
 
             </div>
@@ -322,19 +320,14 @@
                 @forelse ($property->images as $key => $image)
 
                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-
                     <div
-                        style="
-                                background-image:url('{{ asset('storage/' . $image->image_path) }}');
-                            ">
+                        style="background-image:url('{{ asset('storage/' . $image->image_path) }}');">
                     </div>
-
                 </div>
 
                 @empty
 
                 <div class="carousel-item active">
-
                     <div
                         style="
                                 background:#ddd;
@@ -342,11 +335,8 @@
                                 align-items:center;
                                 justify-content:center;
                             ">
-
                         No Image
-
                     </div>
-
                 </div>
 
                 @endforelse
@@ -419,6 +409,47 @@
             </div>
 
         </div>
+    
+        {{-- AGENT --}}
+        <div class="section">
+
+            <div class="fw-bold mb-3">
+                Agen Properti
+            </div>
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body d-flex align-items-center">
+
+                    <img
+                        src="{{ $property->user->avatar
+                    ? asset('storage/'.$property->user->avatar)
+                    : 'https://ui-avatars.com/api/?name=' . strtoupper(substr($property->user->name, 0, 1)) }}"
+                        style="
+                    width:60px;
+                    height:60px;
+                    border-radius:50%;
+                    object-fit:cover;
+                    
+                ">
+
+                    <div class="ms-3">
+
+                        <div class="fw-bold">
+                            {{ $property->user->name }}
+                        </div>
+
+                        <small class="text-muted">
+                            Agen Properti
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
 
         {{-- DESCRIPTION --}}
         <div class="section">
@@ -474,6 +505,7 @@
             href="{{ route('property.whatsapp', $property->id) }}"
             target="_blank"
             class="btn btn-success">
+            <i class="bi bi-whatsapp"></i>
             Hubungi via WhatsApp
         </a>
 

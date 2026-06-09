@@ -43,4 +43,9 @@ class Property extends Model
     {
         return $this->hasMany(PropertyClick::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

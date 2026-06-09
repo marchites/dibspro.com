@@ -30,4 +30,12 @@ class User extends Authenticatable
             'role' => 'string',
         ];
     }
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'avatar',
+    ];
 }

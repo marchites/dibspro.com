@@ -11,21 +11,58 @@
 
             <div class="mb-3">
 
-                <div style="
-                width:80px;
-                height:80px;
-                border-radius:50%;
-                background:#2c7be5;
-                color:white;
+                <div class="position-relative d-inline-block">
+
+                    {{-- AVATAR --}}
+                    @if(auth()->user()->avatar)
+
+                    <img
+                        src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                        style="
+        width:80px;
+        height:80px;
+        border-radius:50%;
+        object-fit:cover;
+    ">
+
+                    @else
+
+                    <div style="
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#2c7be5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:700;
+">
+
+                        {{ strtoupper(substr(auth()->user()->name,0,1)) }}
+
+                    </div>
+
+                    @endif
+
+                    {{-- EDIT BUTTON --}}
+                    <a href="/account/profile/edit"
+                        class="btn btn-primary btn-sm rounded-circle position-absolute"
+                        style="
+                bottom:0;
+                right:0;
+                width:30px;
+                height:30px;
                 display:flex;
                 align-items:center;
                 justify-content:center;
-                font-size:28px;
-                font-weight:700;
-                margin:auto;
+                padding:0;
             ">
 
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        <i class="bi bi-camera-fill"></i>
+
+                    </a>
 
                 </div>
 
@@ -80,6 +117,25 @@
                     <i class="bi bi-heart"></i>
 
                     <span>Properti Favorit</span>
+
+                </div>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </a>
+
+        </div>
+
+        <div class="card-box mb-2">
+
+            <a href="/account/profile/edit"
+                class="d-flex justify-content-between align-items-center text-decoration-none text-dark">
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <i class="bi bi-person-gear"></i>
+
+                    <span>Edit Profil</span>
 
                 </div>
 

@@ -180,6 +180,7 @@ class AdminController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'status' => 'available',
+            'user_id' => auth()->id(),
         ]);
 
         /*
