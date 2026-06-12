@@ -145,6 +145,16 @@
         </div>
 
         <div class="mb-3">
+            <label>Video Properti (Opsional)</label>
+
+            <input
+                type="file"
+                name="video"
+                accept="video/*"
+                class="form-control">
+        </div>
+
+        <div class="mb-3">
             <label>Deskripsi</label>
             <textarea name="description"
                 rows="5"

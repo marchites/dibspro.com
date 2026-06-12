@@ -158,7 +158,15 @@ class AdminController extends Controller
         $request->validate([
             'title' => 'required',
             'images.*' => 'image|mimes:jpg,jpeg,png,heic|max:2048',
+            'video' => 'nullable|mimes:mp4,mov,avi|max:51200',
         ]);
+
+        $videoPath = null;
+
+        if ($request->hasFile('video')) {
+            $videoPath = $request->file('video')
+                ->store('property-videos', 'public');
+        }
 
         /*
     |--------------------------------------------------------------------------
@@ -181,6 +189,7 @@ class AdminController extends Controller
             'longitude' => $request->longitude,
             'status' => 'available',
             'user_id' => auth()->id(),
+            'video' => $videoPath,
         ]);
 
         /*
@@ -223,6 +232,17 @@ class AdminController extends Controller
 
         $request->validate(['title' => 'required', 'price' => 'required|numeric', 'location' => 'required', 'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',]);
 
+        $videoPath = $property->video;
+
+        if ($request->hasFile('video')) {
+            if ($property->video) {
+                Storage::disk('public')->delete($property->video);
+            }
+
+            $videoPath = $request->file('video')
+                ->store('property-videos', 'public');
+        }
+
         $property->update([
             'title' => $request->title,
             'price' => $request->price,
@@ -236,6 +256,7 @@ class AdminController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'is_featured' => $request->is_featured ? 1 : 0,
+            'video' => $videoPath,
         ]);
 
         /* |-------------------------------------------------------------------------- | UPLOAD MULTIPLE IMAGE |-------------------------------------------------------------------------- */
@@ -253,6 +274,18 @@ class AdminController extends Controller
     public function deleteProperty($id)
     {
         $property = Property::findOrFail($id);
+
+        // Hapus video
+        if ($property->video) {
+            Storage::disk('public')->delete($property->video);
+        }
+
+        // Hapus semua image
+        foreach ($property->images as $image) {
+            Storage::disk('public')->delete($image->image_path);
+            $image->delete();
+        }
+
         $property->delete();
 
         return back()->with('success', 'Properti berhasil dihapus');
@@ -451,5 +484,20 @@ class AdminController extends Controller
             'success',
             'Setting berhasil diupdate'
         );
+    }
+
+    public function deletePropertyVideo($id)
+    {
+        $property = Property::findOrFail($id);
+
+        if ($property->video) {
+            Storage::disk('public')->delete($property->video);
+
+            $property->update([
+                'video' => null
+            ]);
+        }
+
+        return back()->with('success', 'Video berhasil dihapus');
     }
 }

@@ -65,6 +65,8 @@ Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::put('/properties/{id}/update', [AdminController::class, 'updateProperty']);
     Route::delete('/properties/{id}/delete', [AdminController::class, 'deleteProperty']);
     Route::delete('/property/image/{id}', [AdminController::class, 'deletePropertyImage']);
+    Route::delete('/dashboard/property/{id}/video', [AdminController::class, 'deletePropertyVideo']
+);
     
     // Article Management
     Route::get('/articles', [AdminController::class, 'articles']);

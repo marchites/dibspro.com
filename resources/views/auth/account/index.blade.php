@@ -19,26 +19,26 @@
                     <img
                         src="{{ asset('storage/' . auth()->user()->avatar) }}"
                         style="
-        width:80px;
-        height:80px;
-        border-radius:50%;
-        object-fit:cover;
-    ">
+                            width:80px;
+                            height:80px;
+                            border-radius:50%;
+                            object-fit:cover;
+                        ">
 
                     @else
 
                     <div style="
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#2c7be5;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    font-weight:700;
-">
+                            width:80px;
+                            height:80px;
+                            border-radius:50%;
+                            background:#2c7be5;
+                            color:white;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:28px;
+                            font-weight:700;
+                        ">
 
                         {{ strtoupper(substr(auth()->user()->name,0,1)) }}
 

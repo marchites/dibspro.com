@@ -142,6 +142,15 @@
         </div>
 
         <div class="mb-3">
+            <label>Video Properti (Opsional)</label>
+
+            <input type="file"
+                name="video"
+                accept="video/*"
+                class="form-control">
+        </div>
+
+        <div class="mb-3">
             <label>Deskripsi</label>
 
             <textarea name="description"
@@ -197,6 +206,37 @@
         </div>
         @endforeach
     </div>
+
+    @if($property->video)
+    <div class="mb-3">
+        <label>Video Saat Ini</label>
+
+        <video controls
+            style="
+            width:100%;
+            max-height:300px;
+            border-radius:12px;
+        ">
+            <source
+                src="{{ asset('storage/' . $property->video) }}"
+                type="video/mp4">
+        </video>
+    </div>
+    @endif
+
+    @if($property->video)
+    <form action="/dashboard/property/{{ $property->id }}/video"
+        method="POST"
+        class="mb-3">
+        @csrf
+        @method('DELETE')
+
+        <button class="btn btn-danger btn-sm">
+            <i class="bi bi-trash"></i>
+            Hapus Video
+        </button>
+    </form>
+    @endif
 
 </div>
 

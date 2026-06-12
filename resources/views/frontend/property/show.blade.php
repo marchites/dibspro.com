@@ -240,6 +240,53 @@
             height: 220px;
             border-radius: 14px;
         }
+
+        /* Video */
+        .carousel-item div {
+            height: 280px;
+        }
+
+        .carousel-video {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 42px;
+            cursor: pointer;
+
+            backdrop-filter: blur(8px);
+        }
+
+        .play-btn:hover {
+            background: rgba(0, 0, 0, 0.75);
+        }
     </style>
 
 </head>
@@ -314,30 +361,36 @@
 
             </div>
 
-            {{-- IMAGES --}}
             <div class="carousel-inner">
 
+                {{-- VIDEO FIRST --}}
+                @if($property->video)
+                <div class="carousel-item active">
+                    <div class="video-wrapper">
+                        <video
+                            id="property-video"
+                            class="carousel-video">
+                            <source
+                                src="{{ asset('storage/' . $property->video) }}"
+                                type="video/mp4">
+                        </video>
+
+                        <button id="play-btn" class="play-btn" type="button">
+                            <i class="bi bi-play-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                @endif
+
+                {{-- IMAGES --}}
                 @forelse ($property->images as $key => $image)
 
-                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                    <div
-                        style="background-image:url('{{ asset('storage/' . $image->image_path) }}');">
+                <div class="carousel-item {{ !$property->video && $key == 0 ? 'active' : '' }}">
+                    <div style="background-image:url('{{ asset('storage/' . $image->image_path) }}');">
                     </div>
                 </div>
 
                 @empty
-
-                <div class="carousel-item active">
-                    <div
-                        style="
-                                background:#ddd;
-                                display:flex;
-                                align-items:center;
-                                justify-content:center;
-                            ">
-                        No Image
-                    </div>
-                </div>
 
                 @endforelse
 
@@ -409,7 +462,7 @@
             </div>
 
         </div>
-    
+
         {{-- AGENT --}}
         <div class="section">
 
@@ -644,6 +697,26 @@
 
             }
 
+        }
+
+        // Video 
+        const video = document.getElementById('property-video');
+        const playBtn = document.getElementById('play-btn');
+
+        if (video && playBtn) {
+            playBtn.addEventListener('click', function() {
+                video.play();
+                video.controls = true;
+                playBtn.style.display = 'none';
+            });
+
+            video.addEventListener('pause', function() {
+                playBtn.style.display = 'flex';
+            });
+
+            video.addEventListener('ended', function() {
+                playBtn.style.display = 'flex';
+            });
         }
     </script>
 
