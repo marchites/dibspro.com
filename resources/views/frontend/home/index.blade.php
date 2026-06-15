@@ -19,8 +19,8 @@
                 Pasang Iklan
             </a>
             {!! auth()->user()->avatar
-                ? '<img src="' . asset('storage/' . auth()->user()->avatar) . '" class="rounded-circle" style="width:30px; height:30px; object-fit:cover;">'
-                : ''
+            ? '<img src="' . asset('storage/' . auth()->user()->avatar) . '" class="rounded-circle" style="width:30px; height:30px; object-fit:cover;">'
+            : ''
             !!}
         </div>
         @else
@@ -113,6 +113,12 @@
                     @endif
                     <div class="property-card {{ $property->status == 'sold' ? 'property-disabled' : '' }}">
                         <div class="property-img" style="background-image: url('{{ $property->bg_image }}')">
+                            {{-- FEATURED BADGE --}}
+                            @if($property->is_featured)
+                            <div class="featured-badge">
+                                ⭐ Unggulan
+                            </div>
+                            @endif
                             @if($property->status == 'sold')
                             <div class="sold-overlay">
                                 SOLD OUT

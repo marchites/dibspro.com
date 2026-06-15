@@ -104,3 +104,21 @@ a {
 .text-primary {
     color: var(--secondary) !important;
 }
+
+/* Feature Badge  */
+    .featured-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #f59e0b;
+        color: white;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+    }
+
+    .property-img {
+        position: relative;
+    }
+/* End Feature Badge */

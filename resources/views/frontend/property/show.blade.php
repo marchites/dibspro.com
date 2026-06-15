@@ -287,6 +287,25 @@
         .play-btn:hover {
             background: rgba(0, 0, 0, 0.75);
         }
+
+        /* Feature Badge  */
+        .featured-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #f59e0b;
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .property-img {
+            position: relative;
+        }
+
+        /* End Feature Badge */
     </style>
 
 </head>
@@ -367,12 +386,10 @@
                 @if($property->video)
                 <div class="carousel-item active">
                     <div class="video-wrapper">
-                        <video
-                            id="property-video"
-                            class="carousel-video">
-                            <source
-                                src="{{ asset('storage/' . $property->video) }}"
-                                type="video/mp4">
+
+                        <video id="property-video" class="carousel-video">
+
+                            <source src="{{ asset('storage/' . $property->video) }}" type="video/mp4">
                         </video>
 
                         <button id="play-btn" class="play-btn" type="button">
@@ -422,6 +439,13 @@
 
         {{-- PROPERTY INFO --}}
         <div class="section">
+
+            {{-- FEATURED BADGE --}}
+            @if($property->is_featured)
+            <div class="featured-badge">
+                ⭐ Unggulan
+            </div>
+            @endif
 
             <div class="price">
                 Rp {{ number_format($property->price, 0, ',', '.') }}
