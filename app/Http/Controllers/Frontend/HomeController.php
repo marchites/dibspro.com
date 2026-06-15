@@ -13,17 +13,14 @@ class HomeController extends Controller
     public function index()
     {
         // Properti unggulan
-        $featured = Property::where('is_featured', 1)
-                    ->latest()
-                    ->take(1)
-                    ->get();
+        $featuredProperties = Property::with('images')->where('is_featured', 1)->latest()->get();
 
         // Properti terbaru
-        $properties = Property::latest()->take(5)->get();
+        $properties = Property::latest()->take(6)->get();
 
         // Artikel
         $articles = Article::latest()->take(3)->get();
 
-        return view('frontend.home.index', compact('featured', 'properties', 'articles'));
+        return view('frontend.home.index', compact('featuredProperties', 'properties', 'articles'));
     }
 }
