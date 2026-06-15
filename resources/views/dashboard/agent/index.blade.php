@@ -28,7 +28,10 @@
                     </div>
 
                     <div style="font-size:12px; color:#777;">
+                        <a href="{{ route('agent.properties.index') }}"
+                            style="color:#777; text-decoration:underline;">
                         Kelola listing properti milikmu
+                        </a>
                     </div>
                 </div>
 

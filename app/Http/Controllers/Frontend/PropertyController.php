@@ -43,7 +43,7 @@ class PropertyController extends Controller
         }
 
         // Urutan terbaru + pagination
-        $properties = $query->latest()->paginate(10);
+        $properties = $query->where('approval_status', 'approved')->latest()->paginate(10);
 
         return view('frontend.property.index', compact('properties'));
     }

@@ -14,6 +14,7 @@ use App\Models\PropertyImage;
 use App\Models\ArticleCategory;
 use App\Models\PropertyView;
 use App\Models\PropertyClick;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -121,6 +122,11 @@ class AdminController extends Controller
             ->orderBy('label')
             ->get();
 
+        $pendingProperties = Property::with('user')
+            ->where('approval_status', 'pending')
+            ->latest()
+            ->get();
+
         return view('dashboard.admin.index', [
             'totalProperties' => $totalProperties,
             'totalViews' => $totalViews,
@@ -138,13 +144,13 @@ class AdminController extends Controller
             'yearWhatsapp' => $yearWhatsapp,
             'monthlyViews' => $monthlyViews,
             'yearlyViews' => $yearlyViews,
+            'pendingProperties' => $pendingProperties,
         ]);
     }
 
     public function properties()
     {
-        $properties = Property::latest()->paginate(10);
-
+        $properties = Property::with(['images', 'user'])->latest()->paginate(10);
         return view('dashboard.admin.properties.index', compact('properties'));
     }
 
@@ -188,7 +194,7 @@ class AdminController extends Controller
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'status' => 'available',
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'video' => $videoPath,
         ]);
 
@@ -316,6 +322,28 @@ class AdminController extends Controller
         $image->delete();
 
         return back()->with('success', 'Foto berhasil dihapus');
+    }
+
+    public function approveProperty($id)
+    {
+        $property = Property::findOrFail($id);
+
+        $property->update([
+            'approval_status' => 'approved'
+        ]);
+
+        return back()->with('success', 'Properti berhasil disetujui');
+    }
+
+    public function rejectProperty($id)
+    {
+        $property = Property::findOrFail($id);
+
+        $property->update([
+            'approval_status' => 'rejected'
+        ]);
+
+        return back()->with('success', 'Properti ditolak');
     }
 
 

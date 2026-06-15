@@ -16,7 +16,7 @@ class HomeController extends Controller
         $featuredProperties = Property::with('images')->where('is_featured', 1)->latest()->get();
 
         // Properti terbaru
-        $properties = Property::latest()->take(6)->get();
+        $properties = Property::where('approval_status', 'approved')->latest()->take(6)->get();
 
         // Artikel
         $articles = Article::latest()->take(3)->get();

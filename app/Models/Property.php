@@ -27,7 +27,9 @@ class Property extends Model
         'latitude',
         'longitude',
         'is_featured',
-        'video'
+        'video',
+        'user_id',
+        'approval_status',
     ];
 
     public function images()

@@ -65,8 +65,9 @@ Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::put('/properties/{id}/update', [AdminController::class, 'updateProperty']);
     Route::delete('/properties/{id}/delete', [AdminController::class, 'deleteProperty']);
     Route::delete('/property/image/{id}', [AdminController::class, 'deletePropertyImage']);
-    Route::delete('/property/{id}/video', [AdminController::class, 'deletePropertyVideo']
-);
+    Route::delete('/property/{id}/video', [AdminController::class, 'deletePropertyVideo']);
+    Route::put('/properties/{id}/approve', [AdminController::class, 'approveProperty'])->name('admin.properties.approve');
+    Route::put('/properties/{id}/reject', [AdminController::class, 'rejectProperty'])->name('admin.properties.reject');
     
     // Article Management
     Route::get('/articles', [AdminController::class, 'articles']);
@@ -75,7 +76,7 @@ Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::get('/articles/{id}/edit', [AdminController::class, 'editArticle']);
     Route::put('/articles/{id}/update', [AdminController::class, 'updateArticle']);
     Route::delete('/articles/{id}/delete', [AdminController::class, 'deleteArticle']);
-    Route::put('/properties/{id}/toggle-status',[AdminController::class, 'togglePropertyStatus']);
+    Route::put('/properties/{id}/toggle-status',[AdminController::class, 'togglePropertyStatus'])->name('admin.properties.toggle-status');
 
     // Settings
     Route::get('/settings', [AdminController::class, 'settings']);
@@ -88,5 +89,15 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->group(function () {
 
     // Agent Dashboard
     Route::get('/dashboard', [AgentController::class, 'index'])->name('agent.dashboard');
+
+    // Property Management
+    Route::get('/properties', [AgentController::class, 'properties'])->name('agent.properties.index');
+    Route::get('/properties/create', [AgentController::class, 'createProperty'])->name('agent.properties.create');
+    Route::post('/properties/store', [AgentController::class, 'storeProperty'])->name('agent.properties.store');
+    Route::get('/properties/{id}/edit', [AgentController::class, 'editProperty'])->name('agent.properties.edit');
+    Route::put('/properties/{id}/update', [AgentController::class, 'updateProperty'])->name('agent.properties.update');
+    Route::delete('/property/image/{id}', [AgentController::class, 'deletePropertyImage']);
+    Route::delete('/property/{id}/video', [AgentController::class, 'deletePropertyVideo']);
+    Route::put('/properties/{id}/toggle-status', [AgentController::class, 'togglePropertyStatus'])->name('agent.properties.toggle-status');
 
 });
