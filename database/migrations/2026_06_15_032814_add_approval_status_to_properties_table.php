@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('properties', function (Blueprint $table) {
             //
-            $table->string('approval_status')->default('pending')->after('is_featured');
+            $table->string('approval_status')->default('pending');
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->dropColumn('approval_status');
+            //
         });
     }
 };
