@@ -1,5 +1,6 @@
 :root {
     --primary: #472183;
+    --primary-opacity: rgba(71, 33, 131, 0.03);
     --secondary: #4B56D2;
     --tertiary: #82C3EC;
     --quaternary: #F1F6F5;
@@ -9,14 +10,27 @@
     --info: #17a2b8;
     --light: #f8f9fa;
     --dark: #343a40;
+    --dark-opacity: rgba(52, 58, 64, 0.1);
     --backround: #f5f6f8;
     --background-layer: #fff;
 }
 
-.section { padding: 15px; }
-
 body {
     background: var(--backround);
+}
+
+.section { 
+    padding: 15px; 
+}
+
+.section-dark { 
+    padding: 15px;
+    background-color: var(--primary-opacity);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .app-container {
@@ -42,73 +56,51 @@ body {
 }
 
 /* BOTTOM NAV */
-        .bottom-nav {
-            position: fixed;
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: #fff;
+    border-top: 1px solid var(--dark-opacity);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    z-index: 999;
+}
 
-            bottom: 0;
-            left: 50%;
+.bottom-nav::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
 
-            transform: translateX(-50%);
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #888;
+    font-size: 11px;
+    gap: 3px;
+}
 
-            width: 100%;
-            max-width: 480px;
+.nav-item i {
+    font-size: 19px;
+}
 
-            background: #fff;
+.nav-item.active {
+    color: var(--secondary);
+    font-weight: 600;
+}
 
-            border-top: 1px solid #eee;
-
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-
-            padding: 10px 0;
-
-            z-index: 999;
-        }
-
-        .bottom-nav::before {
-            content: "";
-
-            position: absolute;
-
-            top: -20px;
-            left: 0;
-
-            width: 100%;
-            height: 20px;
-
-            background: linear-gradient(
-                to top,
-                rgba(255,255,255,1),
-                rgba(255,255,255,0)
-            );
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            text-decoration: none;
-
-            color: #888;
-
-            font-size: 11px;
-
-            gap: 3px;
-        }
-
-        .nav-item i {
-            font-size: 19px;
-        }
-
-        .nav-item.active {
-            color: var(--secondary);
-            font-weight: 600;
-        }
-
-        .text-primary {
-            color: var(--secondary) !important;
-        }
+.text-primary {
+    color: var(--secondary) !important;
+}

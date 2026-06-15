@@ -30,34 +30,30 @@
     {{-- BOTTOM NAV --}}
     <div class="bottom-nav">
 
-        <a href="/"
-            class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
-            <i class="bi bi-house"></i>
+        <a href="/" class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+            <i class="bi {{ request()->routeIs('home') ? 'bi-grid-fill' : 'bi-grid' }}"></i>
             <span>Home</span>
         </a>
 
         <a href="/property"
             class="nav-item {{ request()->routeIs('property') ? 'active' : '' }}">
-            <i class="bi bi-houses"></i>
+            <i class="bi {{ request()->routeIs('property') ? 'bi-houses-fill' : 'bi-houses' }}"></i>
             <span>Properti</span>
         </a>
 
-        <a href="/kalkulator-kpr"
-            class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
-            <i class="bi bi-calculator"></i>
+        <a href="/kalkulator-kpr" class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
+            <i class="bi {{ request()->routeIs('kpr.index') ? 'bi-calculator-fill' : 'bi-calculator' }}"></i>
             <span>KPR</span>
         </a>
 
-        <a href="/article"
-            class="nav-item {{ request()->routeIs('article') ? 'active' : '' }}">
-            <i class="bi bi-card-text"></i>
+        <a href="/article" class="nav-item {{ request()->routeIs('article') ? 'active' : '' }}">
+            <i class="bi {{ request()->routeIs('article') ? 'bi-collection-fill' : 'bi-collection' }}"></i>
             <span>Artikel</span>
         </a>
 
         {{-- ACCOUNT --}}
-        <a href="{{ auth()->check() ? '/account' : '/login' }}"
-            class="nav-item {{ request()->is('account') || request()->is('login') ? 'active' : '' }}">
-            <i class="bi bi-person"></i>
+        <a href="{{ auth()->check() ? '/account' : '/login' }}" class="nav-item {{ request()->is('account') || request()->is('login') ? 'active' : '' }}">
+            <i class="bi {{ request()->is('account') || request()->is('login') ? 'bi-person-fill' : 'bi-person' }}"></i>
             <span>Akun</span>
         </a>
     </div>

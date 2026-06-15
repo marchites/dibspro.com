@@ -17,10 +17,8 @@ use App\Http\Controllers\Frontend\PropertyController;
 // Auth Routes
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginProcess']);
-
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerProcess']);
-
 Route::post('/logout', [AuthController::class, 'logout']);
 
 // Public Routes
@@ -96,8 +94,8 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->group(function () {
     Route::post('/properties/store', [AgentController::class, 'storeProperty'])->name('agent.properties.store');
     Route::get('/properties/{id}/edit', [AgentController::class, 'editProperty'])->name('agent.properties.edit');
     Route::put('/properties/{id}/update', [AgentController::class, 'updateProperty'])->name('agent.properties.update');
+    Route::put('/properties/{id}/toggle-status', [AgentController::class, 'togglePropertyStatus'])->name('agent.properties.toggle-status');
     Route::delete('/property/image/{id}', [AgentController::class, 'deletePropertyImage']);
     Route::delete('/property/{id}/video', [AgentController::class, 'deletePropertyVideo']);
-    Route::put('/properties/{id}/toggle-status', [AgentController::class, 'togglePropertyStatus'])->name('agent.properties.toggle-status');
 
 });
