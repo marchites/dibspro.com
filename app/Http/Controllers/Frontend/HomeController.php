@@ -13,10 +13,10 @@ class HomeController extends Controller
     public function index()
     {
         // Properti unggulan
-        $featuredProperties = Property::with('images')->where('is_featured', 1)->latest()->get();
+        $featuredProperties = Property::with('images')->where('approval_status', 'approved')->where('is_featured', 1)->latest()->get();
 
         // Properti terbaru
-        $properties = Property::where('approval_status', 'approved')->latest()->take(6)->get();
+        $properties = Property::with('images')->where('approval_status', 'approved')->latest()->take(6)->get();
 
         // Artikel
         $articles = Article::latest()->take(3)->get();
