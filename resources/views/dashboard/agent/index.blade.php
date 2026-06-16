@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('dashboard.layouts.agent')
 
 @section('title', 'Dashboard Agent')
 
@@ -6,7 +6,7 @@
 <div class="container">
     <div class="section">
 
-        <div class="card-box mb-3">
+        <div class="mb-3">
 
             <div style="font-size:20px; font-weight:700;">
                 Halo, {{ auth()->user()->name }} 👋
@@ -42,7 +42,7 @@
 
         </div>
 
-        <div class="card-box mb-2">
+        <!-- <div class="card-box mb-2">
 
             <div class="d-flex justify-content-between align-items-center">
 
@@ -61,7 +61,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </div>
 </div>

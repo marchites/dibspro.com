@@ -14,7 +14,7 @@
         </h6>
         @if(auth()->check())
         <div>
-            <a href="#" class="btn btn-light btn-sm rounded disabled">
+            <a href="{{ route('register') }}" class="btn btn-light btn-sm rounded">
                 <i class="bi bi-megaphone"></i>
                 Pasang Iklan
             </a>

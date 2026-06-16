@@ -98,4 +98,8 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->group(function () {
     Route::delete('/property/image/{id}', [AgentController::class, 'deletePropertyImage']);
     Route::delete('/property/{id}/video', [AgentController::class, 'deletePropertyVideo']);
 
+    // Settings
+    Route::get('/settings', [AgentController::class, 'settings'])->name('agent.settings');
+    Route::post('/settings/update', [AgentController::class, 'agent.updateSettings']);
+
 });

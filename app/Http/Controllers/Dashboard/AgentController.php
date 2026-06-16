@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Property;
-use App\Models\PropertyImage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Models\Property;
+use App\Models\PropertyImage;
+use App\Models\Setting;
 
 class AgentController extends Controller
 {
@@ -206,5 +207,29 @@ class AgentController extends Controller
             'success',
             'Status properti berhasil diubah'
         );
+    }
+
+    public function settings()
+    {
+        $settings = Setting::pluck('value', 'key');
+
+        return view('dashboard.agent.settings.index', compact('settings'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $data = [
+
+            'site_name' => $request->site_name,
+
+            'tagline' => $request->tagline,
+
+            'whatsapp' => $request->whatsapp,
+
+            'email' => $request->email,
+
+            'logo' => $request->logo,
+
+        ];
     }
 }

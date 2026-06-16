@@ -39,7 +39,7 @@
             <span>Properti</span>
         </a>
 
-        <a href="{{ route('kpr.index') }}r" class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
+        <a href="{{ route('kpr.index') }}" class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
             <i class="bi {{ request()->routeIs('kpr.index') ? 'bi-calculator-fill' : 'bi-calculator' }}"></i>
             <span>KPR</span>
         </a>
