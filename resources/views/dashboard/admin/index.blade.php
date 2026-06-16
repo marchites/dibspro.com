@@ -165,6 +165,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Foto</th>
                             <th>Properti</th>
                             <th>Views</th>
                         </tr>
@@ -172,7 +173,14 @@
                     <tbody>
                         @foreach($topProperties as $property)
                         <tr>
-                            <td>{{ $property->title }}</td>
+                            <td style="width: 20%;">
+                                <img src="{{ $property->images->first()?->image_path ? asset('storage/' . $property->images->first()->image_path) : 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1470&auto=format&fit=crop' }}" style="width:50%; height:50%; object-fit:cover;">
+                            </td>
+                            <td>
+                                <a href="property/{{ $property->slug }}">
+                                    {{ $property->title }}
+                                </a>
+                            </td>
                             <td>
                                 {{ number_format($property->views_count) }}
                             </td>
