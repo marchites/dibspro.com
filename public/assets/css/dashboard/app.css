@@ -70,7 +70,7 @@ body {
 .topbar {
    position: sticky;
    top: 0;
-   z-index: 1000;
+   z-index: 2000;
    background: #fff;
    padding: 16px;
    border-bottom: 1px solid #eee;

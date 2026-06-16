@@ -148,60 +148,64 @@
 |--------------------------------------------------------------------------
 */
 
-.pagination{
-    display:flex !important;
-
-    flex-direction:row !important;
-
-    justify-content:center !important;
-
-    align-items:center !important;
-
-    gap:8px !important;
-
-    padding:0 !important;
-
-    margin-top:24px !important;
-
-    list-style:none !important;
+/* PAGINATION */
+.pagination {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    margin-top: 4px !important;
+    list-style: none !important;
 }
 
-.pagination *{
-    list-style:none !important;
+.pagination * {
+    list-style: none !important;
 }
 
-.pagination .page-item{
-    display:flex !important;
+.pagination .page-item {
+    display: flex !important;
 }
 
-.pagination .page-link{
+.pagination .page-link {
+    min-width: 38px !important;
+    height: 38px !important;
 
-    width:40px !important;
-    height:40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    display:flex !important;
+    padding: 0 12px !important;
+    border: none !important;
+    border-radius: 10px !important;
 
-    align-items:center !important;
-    justify-content:center !important;
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 14px !important;
 
-    border:none !important;
-
-    border-radius:12px !important;
-
-    background:#fff !important;
-
-    color:#111 !important;
-
-    font-size:14px !important;
-
-    box-shadow:0 2px 8px rgba(0,0,0,0.06) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
 }
 
-.pagination .active .page-link{
-    background:#0d6efd !important;
-    color:#fff !important;
+.pagination .active .page-link {
+    background: #0d6efd !important;
+    color: #fff !important;
 }
 
-.pagination .disabled .page-link{
-    opacity:0.4 !important;
+.pagination .disabled .page-link {
+    opacity: 0.4 !important;
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        gap: 4px !important;
+    }
+
+    .pagination .page-link {
+        min-width: 34px !important;
+        height: 34px !important;
+        font-size: 12px !important;
+        border-radius: 8px !important;
+        padding: 0 8px !important;
+    }
 }

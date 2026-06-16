@@ -1,6 +1,10 @@
 @extends('dashboard.layouts.app')
 @section('title', 'Kelola Properti')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/property.css') }}">
+@endpush
+
 @section('content')
 <div class="section">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -136,8 +140,9 @@
     @endforeach
 </div>
 
-<div class="mt-3">
-    {{ $properties->links() }}
+{{-- PAGINATION --}}
+<div class="d-flex justify-content-center mt-4">
+    {{ $properties->withQueryString()->links() }}
 </div>
 
 @endsection
