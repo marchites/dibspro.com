@@ -29,24 +29,22 @@
 
     {{-- BOTTOM NAV --}}
     <div class="bottom-nav">
-
         <a href="/" class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
             <i class="bi {{ request()->routeIs('home') ? 'bi-grid-fill' : 'bi-grid' }}"></i>
             <span>Home</span>
         </a>
 
-        <a href="/property"
-            class="nav-item {{ request()->routeIs('property') ? 'active' : '' }}">
+        <a href="{{ route('property') }}" class="nav-item {{ request()->routeIs('property') ? 'active' : '' }}">
             <i class="bi {{ request()->routeIs('property') ? 'bi-houses-fill' : 'bi-houses' }}"></i>
             <span>Properti</span>
         </a>
 
-        <a href="/kalkulator-kpr" class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
+        <a href="{{ route('kpr.index') }}r" class="nav-item nav-item-center {{ request()->routeIs('kpr.index') ? 'active' : '' }}">
             <i class="bi {{ request()->routeIs('kpr.index') ? 'bi-calculator-fill' : 'bi-calculator' }}"></i>
             <span>KPR</span>
         </a>
 
-        <a href="/article" class="nav-item {{ request()->routeIs('article') ? 'active' : '' }}">
+        <a href="{{ route('article') }}" class="nav-item {{ request()->routeIs('article') ? 'active' : '' }}">
             <i class="bi {{ request()->routeIs('article') ? 'bi-collection-fill' : 'bi-collection' }}"></i>
             <span>Artikel</span>
         </a>
@@ -57,9 +55,10 @@
             <span>Akun</span>
         </a>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ asset('assets/js/swiper.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

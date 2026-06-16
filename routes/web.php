@@ -53,10 +53,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
 
     // Dashboard Home
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // Property Management
-    Route::get('/properties', [AdminController::class, 'properties']);
+    Route::get('/properties', [AdminController::class, 'properties'])->name('admin.properties');
     Route::get('/properties/create', [AdminController::class, 'createProperty']);
     Route::post('/properties/store', [AdminController::class, 'storeProperty']);
     Route::get('/properties/{id}/edit', [AdminController::class, 'editProperty']);
@@ -68,7 +68,7 @@ Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::put('/properties/{id}/reject', [AdminController::class, 'rejectProperty'])->name('admin.properties.reject');
     
     // Article Management
-    Route::get('/articles', [AdminController::class, 'articles']);
+    Route::get('/articles', [AdminController::class, 'articles'])->name('admin.articles');
     Route::get('/articles/create', [AdminController::class, 'createArticle']);
     Route::post('/articles/store', [AdminController::class, 'storeArticle']);
     Route::get('/articles/{id}/edit', [AdminController::class, 'editArticle']);
@@ -77,7 +77,7 @@ Route::middleware(['auth', 'admin'])->prefix('dashboard')->group(function () {
     Route::put('/properties/{id}/toggle-status',[AdminController::class, 'togglePropertyStatus'])->name('admin.properties.toggle-status');
 
     // Settings
-    Route::get('/settings', [AdminController::class, 'settings']);
+    Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::post('/settings/update', [AdminController::class, 'updateSettings']);
 
 });
