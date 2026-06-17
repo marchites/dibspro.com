@@ -150,5 +150,9 @@ Route::get('/sitemap.xml', function () {
         );
     });
 
-    return $sitemap->render();
+    return response(
+        $sitemap->render(),
+        200,
+        ['Content-Type' => 'application/xml']
+    );
 });
