@@ -15,7 +15,7 @@
 <meta property="og:title" content="@yield('title', 'DibsPro - Temukan Rumah Impianmu')">
 <meta property="og:description" content="@yield('meta_description', 'Temukan rumah impianmu bersama DibsPro.')">
 <meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:image" content="{{ asset('assets/images/og-cover.png') }}">
+<meta property="og:image" content="{{ asset('assets/images/og-cover.jpg') }}">
 
 {{-- Schema --}}
 <script type="application/ld+json">
