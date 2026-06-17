@@ -8,6 +8,11 @@ use App\Http\Controllers\Dashboard\AgentController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PropertyController;
+use App\Models\Property; 
+use App\Models\Article; 
+use Spatie\Sitemap\Sitemap; 
+use Spatie\Sitemap\Tags\Url; 
+use Illuminate\Support\Carbon;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -102,4 +107,48 @@ Route::middleware(['auth', 'agent'])->prefix('agent')->group(function () {
     Route::get('/settings', [AgentController::class, 'settings'])->name('agent.settings');
     Route::post('/settings/update', [AgentController::class, 'agent.updateSettings']);
 
+});
+
+// Sitemap
+Route::get('/sitemap.xml', function () {
+    $sitemap = Sitemap::create();
+
+    // Static pages
+    $sitemap->add(
+        Url::create('/')
+            ->setLastModificationDate(Carbon::now())
+    );
+
+    $sitemap->add(
+        Url::create('/property')
+            ->setLastModificationDate(Carbon::now())
+    );
+
+    $sitemap->add(
+        Url::create('/article')
+            ->setLastModificationDate(Carbon::now())
+    );
+
+    $sitemap->add(
+        Url::create('/kpr')
+            ->setLastModificationDate(Carbon::now())
+    );
+
+    // Property pages
+    Property::all()->each(function ($property) use ($sitemap) {
+        $sitemap->add(
+            Url::create("/property/{$property->slug}")
+                ->setLastModificationDate($property->updated_at)
+        );
+    });
+
+    // Article pages
+    Article::all()->each(function ($article) use ($sitemap) {
+        $sitemap->add(
+            Url::create("/article/{$article->slug}")
+                ->setLastModificationDate($article->updated_at)
+        );
+    });
+
+    return $sitemap->render();
 });
