@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.app')
 @section('title', 'Edit Properti')
-@section('content')
 
+@section('content')
 <div class="section">
     <form action="/dashboard/properties/{{ $property->id }}/update" method="POST" enctype="multipart/form-data">
         @csrf

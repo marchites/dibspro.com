@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'DibsPro - Temukan Rumah Impianmu')
 
+@section('meta_description', 'Cari rumah, apartemen, tanah, dan simulasi KPR terbaik di DibsPro.')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
 @endpush
