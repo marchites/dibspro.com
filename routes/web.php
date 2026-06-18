@@ -8,11 +8,11 @@ use App\Http\Controllers\Dashboard\AgentController;
 use App\Http\Controllers\Frontend\ArticleController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PropertyController;
-use App\Models\Property; 
-use App\Models\Article; 
-use Spatie\Sitemap\Sitemap; 
-use Spatie\Sitemap\Tags\Url; 
+use App\Models\Property;
+use App\Models\Article;
 use Illuminate\Support\Carbon;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -135,24 +135,25 @@ Route::get('/sitemap.xml', function () {
     );
 
     // Property pages
-    Property::all()->each(function ($property) use ($sitemap) {
-        $sitemap->add(
-            Url::create("/property/{$property->slug}")
-                ->setLastModificationDate($property->updated_at)
-        );
-    });
+    Property::select('slug', 'updated_at')
+        ->get()
+        ->each(function ($property) use ($sitemap) {
+            $sitemap->add(
+                Url::create("/property/{$property->slug}")
+                    ->setLastModificationDate($property->updated_at)
+            );
+        });
 
     // Article pages
-    Article::all()->each(function ($article) use ($sitemap) {
-        $sitemap->add(
-            Url::create("/article/{$article->slug}")
-                ->setLastModificationDate($article->updated_at)
-        );
-    });
+    Article::select('slug', 'updated_at')
+        ->get()
+        ->each(function ($article) use ($sitemap) {
+            $sitemap->add(
+                Url::create("/article/{$article->slug}")
+                    ->setLastModificationDate($article->updated_at)
+            );
+        });
 
-    return response(
-        $sitemap->render(),
-        200,
-        ['Content-Type' => 'application/xml']
-    );
+    return response($sitemap->render(), 200)
+        ->header('Content-Type', 'application/xml');
 });
